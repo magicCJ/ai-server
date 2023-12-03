@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhibai.ai.mapper.WithdrawalRecordMapper">
+
+    <resultMap id="BaseResultMap" type="com.zhibai.ai.model.domain.WithdrawalRecordDO">
+            <id property="id" column="id" jdbcType="BIGINT"/>
+            <result property="gmtCreate" column="gmt_create" jdbcType="TIMESTAMP"/>
+            <result property="gmtModified" column="gmt_modified" jdbcType="TIMESTAMP"/>
+            <result property="version" column="version" jdbcType="INTEGER"/>
+            <result property="userId" column="user_id" jdbcType="BIGINT"/>
+            <result property="withdrawalAmount" column="withdrawal_amount" jdbcType="DECIMAL"/>
+            <result property="withdrawalType" column="withdrawal_type" jdbcType="TINYINT"/>
+            <result property="withdrawalTime" column="withdrawal_time" jdbcType="TIMESTAMP"/>
+            <result property="status" column="status" jdbcType="TINYINT"/>
+            <result property="feature" column="feature" jdbcType="VARCHAR" typeHandler="com.zhibai.ai.util.JsonTypeHandler"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,gmt_create,gmt_modified,
+        version,user_id,withdrawal_amount,
+        withdrawal_type,withdrawal_time,status,
+        feature
+    </sql>
+
+    <select id="countByUserId" resultType="java.lang.Integer">
+        select count(*) from withdrawal_record
+        where user_id = #{userId}
+    </select>
+
+    <select id="queryByUserId" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from withdrawal_record
+        where user_id = #{userId}
+        limit #{pageSize} offset #{startIndex}
+    </select>
+
+    <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.zhibai.ai.model.domain.WithdrawalRecordDO" useGeneratedKeys="true">
+        insert into withdrawal_record
+        (user_id,withdrawal_amount,withdrawal_type,withdrawal_time,status)
+        values (#{userId,jdbcType=BIGINT},#{withdrawalAmount,jdbcType=DECIMAL}
+        ,#{withdrawalType,jdbcType=TINYINT},#{withdrawalTime,jdbcType=TIMESTAMP},1)
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.zhibai.ai.model.domain.WithdrawalRecordDO">
+        update withdrawal_record
+        <set>
+            <if test="version != null">
+                version = version + 1,
+            </if>
+            <if test="userId != null">
+                user_id = #{userId,jdbcType=BIGINT},
+            </if>
+            <if test="withdrawalAmount != null">
+                withdrawal_amount = #{withdrawalAmount,jdbcType=DECIMAL},
+            </if>
+            <if test="withdrawalType != null">
+                withdrawal_type = #{withdrawalType,jdbcType=TINYINT},
+            </if>
+            <if test="withdrawalTime != null">
+                withdrawal_time = #{withdrawalTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=TINYINT},
+            </if>
+            <if test="feature != null">
+                feature = #{feature, typeHandler=com.xunbai.ai.util.JsonTypeHandler},
+            </if>
+        </set>
+        where   id = #{id,jdbcType=BIGINT} 
+    </update>
+
+</mapper>

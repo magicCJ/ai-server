@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhibai.ai.mapper.ConversationTitleMapper">
+
+    <resultMap id="BaseResultMap" type="com.zhibai.ai.model.domain.ConversationTitleDO">
+            <id property="id" column="id" jdbcType="BIGINT"/>
+            <result property="gmtCreate" column="gmt_create" jdbcType="TIMESTAMP"/>
+            <result property="gmtModified" column="gmt_modified" jdbcType="TIMESTAMP"/>
+            <result property="version" column="version" jdbcType="INTEGER"/>
+            <result property="userId" column="user_id" jdbcType="BIGINT"/>
+            <result property="shopType" column="shop_type" jdbcType="TINYINT"/>
+            <result property="batchNo" column="batch_no" jdbcType="VARCHAR"/>
+            <result property="historyTitle" column="history_title" jdbcType="VARCHAR"/>
+            <result property="feature" column="feature" jdbcType="VARCHAR" typeHandler="com.zhibai.ai.util.JsonTypeHandler"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,gmt_create,gmt_modified,version,user_id,shop_type,batch_no,history_title,feature
+    </sql>
+
+
+    <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.zhibai.ai.model.domain.ConversationTitleDO" useGeneratedKeys="true">
+        insert into conversation_title
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="id != null">id,</if>
+                <if test="gmtCreate != null">gmt_create,</if>
+                <if test="gmtModified != null">gmt_modified,</if>
+                <if test="version != null">version,</if>
+                <if test="userId != null">user_id,</if>
+                <if test="shopType != null">shop_type,</if>
+                <if test="batchNo != null">batch_no,</if>
+                <if test="historyTitle != null">history_title,</if>
+                <if test="feature != null">feature,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="id != null">#{id,jdbcType=BIGINT},</if>
+                <if test="gmtCreate != null">#{gmtCreate,jdbcType=TIMESTAMP},</if>
+                <if test="gmtModified != null">#{gmtModified,jdbcType=TIMESTAMP},</if>
+                <if test="version != null">#{version,jdbcType=INTEGER},</if>
+                <if test="userId != null">#{userId,jdbcType=BIGINT},</if>
+                <if test="shopType != null">#{shopType,jdbcType=TINYINT},</if>
+                <if test="batchNo != null">#{batchNo,jdbcType=VARCHAR},</if>
+                <if test="historyTitle != null">#{historyTitle,jdbcType=VARCHAR},</if>
+                <if test="feature != null">#{feature, typeHandler=com.xunbai.ai.util.JsonTypeHandler},</if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.zhibai.ai.model.domain.ConversationTitleDO">
+        update conversation_title
+        <set>
+                <if test="version != null">
+                    version = version + 1,
+                </if>
+                <if test="userId != null">
+                    user_id = #{userId,jdbcType=BIGINT},
+                </if>
+                <if test="shopType != null">
+                    shop_type = #{shopType,jdbcType=TINYINT},
+                </if>
+                <if test="batchNo != null">
+                    batch_no = #{batchNo,jdbcType=VARCHAR},
+                </if>
+                <if test="historyTitle != null">
+                    history_title = #{historyTitle,jdbcType=VARCHAR},
+                </if>
+                <if test="feature != null">
+                    feature = #{feature, typeHandler=com.xunbai.ai.util.JsonTypeHandler},
+                </if>
+        </set>
+        where   id = #{id,jdbcType=BIGINT}
+            and user_id = #{userId}
+    </update>
+
+    <delete id="del">
+        delete from conversation_title
+        where id = #{id,jdbcType=BIGINT}
+          and user_id = #{userId}
+    </delete>
+
+    <select id="queryByUserId" resultMap="BaseResultMap">
+        select
+            <include refid="Base_Column_List"/>
+        from
+            conversation_title
+        where user_id = #{userId}
+        and shop_type = #{shopType}
+        order by id desc
+    </select>
+
+    <select id="queryById" resultMap="BaseResultMap">
+        select
+            <include refid="Base_Column_List"/>
+        from
+            conversation_title
+        where user_id = #{userId}
+        and id = #{id}
+    </select>
+</mapper>

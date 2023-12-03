@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhibai.ai.mapper.ShopInfoMapper">
+  <resultMap id="BaseResultMap" type="com.zhibai.ai.model.domain.ShopInfoDO">
+    <!--@mbg.generated-->
+    <!--@Table shop_info-->
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
+    <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified" />
+    <result column="version" jdbcType="INTEGER" property="version" />
+    <result column="type" jdbcType="TINYINT" property="type" />
+    <result column="shop_title" jdbcType="VARCHAR" property="shopTitle" />
+    <result column="shop_describe" jdbcType="VARCHAR" property="shopDescribe" />
+    <result column="number" jdbcType="INTEGER" property="number" />
+    <result column="effective_days" jdbcType="TINYINT" property="effectiveDays" />
+    <result column="price" jdbcType="DECIMAL" property="price" />
+    <result column="feature" jdbcType="VARCHAR" property="feature" typeHandler="com.zhibai.ai.util.JsonTypeHandler"/>
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, gmt_create, gmt_modified, version, `type`, shop_title, shop_describe, `number`, effective_days,
+    price, feature
+  </sql>
+
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.zhibai.ai.model.domain.ShopInfoDO" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into shop_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="type != null">
+        `type`,
+      </if>
+      <if test="shopTitle != null">
+        shop_title,
+      </if>
+      <if test="shopDescribe != null">
+        shop_describe,
+      </if>
+      <if test="number != null">
+        `number`,
+      </if>
+      <if test="effectiveDays != null">
+        effective_days,
+      </if>
+      <if test="price != null">
+        price,
+      </if>
+      <if test="feature != null">
+        feature,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="type != null">
+        #{type,jdbcType=TINYINT},
+      </if>
+      <if test="shopTitle != null">
+        #{shopTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="shopDescribe != null">
+        #{shopDescribe,jdbcType=VARCHAR},
+      </if>
+      <if test="number != null">
+        #{number},
+      </if>
+      <if test="effectiveDays != null">
+        #{effectiveDays,jdbcType=TINYINT},
+      </if>
+      <if test="price != null">
+        #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="feature != null">
+        #{feature, typeHandler=com.xunbai.ai.util.JsonTypeHandler},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zhibai.ai.model.domain.ShopInfoDO">
+    <!--@mbg.generated-->
+    update shop_info
+    <set>
+      <if test="version != null">
+        version = version + 1,
+      </if>
+      <if test="type != null">
+        `type` = #{type,jdbcType=TINYINT},
+      </if>
+      <if test="shopTitle != null">
+        shop_title = #{shopTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="shopDescribe != null">
+        shop_describe = #{shopDescribe,jdbcType=VARCHAR},
+      </if>
+      <if test="number != null">
+        `number` = #{number},
+      </if>
+      <if test="effectiveDays != null">
+        effective_days = #{effectiveDays,jdbcType=TINYINT},
+      </if>
+      <if test="price != null">
+        price = #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="feature != null">
+        feature = #{feature, typeHandler=com.xunbai.ai.util.JsonTypeHandler},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+    and version = #{version}
+  </update>
+
+  <select id="queryAll" resultMap="BaseResultMap">
+    select
+      <include refid="Base_Column_List"/>
+    from shop_info
+  </select>
+
+  <select id="queryById" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from shop_info where id = #{id}
+  </select>
+
+</mapper>

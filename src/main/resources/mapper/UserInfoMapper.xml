@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhibai.ai.mapper.UserInfoMapper">
+  <resultMap id="BaseResultMap" type="com.zhibai.ai.model.domain.UserInfoDO">
+    <!--@mbg.generated-->
+    <!--@Table user_info-->
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
+    <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified" />
+    <result column="version" jdbcType="INTEGER" property="version" />
+    <result column="nick_name" jdbcType="VARCHAR" property="nickName" />
+    <result column="open_id" jdbcType="VARCHAR" property="openId" />
+    <result column="union_id" jdbcType="VARCHAR" property="unionId" />
+    <result column="head_img" jdbcType="VARCHAR" property="headImg" />
+    <result column="sex" jdbcType="TINYINT" property="sex" />
+    <result column="country" jdbcType="VARCHAR" property="country" />
+    <result column="province" jdbcType="VARCHAR" property="province" />
+    <result column="city" jdbcType="VARCHAR" property="city" />
+    <result column="inviter_id" jdbcType="BIGINT" property="inviterId" />
+    <result column="withdrawal_balance" jdbcType="DECIMAL" property="withdrawalBalance" />
+    <result column="feature" jdbcType="VARCHAR" property="feature" typeHandler="com.zhibai.ai.util.JsonTypeHandler"/>
+  </resultMap>
+
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, gmt_create, gmt_modified, version, nick_name, open_id, union_id, head_img, sex, 
+    country, province, city, inviter_id, withdrawal_balance, feature
+  </sql>
+
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.zhibai.ai.model.domain.UserInfoDO" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into user_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="nickName != null">
+        nick_name,
+      </if>
+      <if test="openId != null">
+        open_id,
+      </if>
+      <if test="unionId != null">
+        union_id,
+      </if>
+      <if test="headImg != null">
+        head_img,
+      </if>
+      <if test="sex != null">
+        sex,
+      </if>
+      <if test="country != null">
+        country,
+      </if>
+      <if test="province != null">
+        province,
+      </if>
+      <if test="city != null">
+        city,
+      </if>
+      <if test="inviterId != null">
+        inviter_id,
+      </if>
+      <if test="withdrawalBalance != null">
+        withdrawal_balance,
+      </if>
+      <if test="feature != null">
+        feature,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="nickName != null">
+        #{nickName,jdbcType=VARCHAR},
+      </if>
+      <if test="openId != null">
+        #{openId,jdbcType=VARCHAR},
+      </if>
+      <if test="unionId != null">
+        #{unionId,jdbcType=VARCHAR},
+      </if>
+      <if test="headImg != null">
+        #{headImg,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        #{sex,jdbcType=TINYINT},
+      </if>
+      <if test="country != null">
+        #{country,jdbcType=VARCHAR},
+      </if>
+      <if test="province != null">
+        #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null">
+        #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="inviterId != null">
+        #{inviterId},
+      </if>
+      <if test="withdrawalBalance != null">
+        #{withdrawalBalance},
+      </if>
+      <if test="feature != null">
+        #{feature, typeHandler=com.xunbai.ai.util.JsonTypeHandler},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zhibai.ai.model.domain.UserInfoDO">
+    <!--@mbg.generated-->
+    update user_info
+    <set>
+      <if test="version != null">
+        version = version + 1,
+      </if>
+      <if test="nickName != null">
+        nick_name = #{nickName,jdbcType=VARCHAR},
+      </if>
+      <if test="openId != null">
+        open_id = #{openId,jdbcType=VARCHAR},
+      </if>
+      <if test="unionId != null">
+        union_id = #{unionId,jdbcType=VARCHAR},
+      </if>
+      <if test="headImg != null">
+        head_img = #{headImg,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        sex = #{sex,jdbcType=TINYINT},
+      </if>
+      <if test="country != null">
+        country = #{country,jdbcType=VARCHAR},
+      </if>
+      <if test="province != null">
+        province = #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null">
+        city = #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="inviterId != null">
+        inviter_id = #{inviterId},
+      </if>
+      <if test="withdrawalBalance != null">
+        withdrawal_balance = #{withdrawalBalance},
+      </if>
+      <if test="feature != null">
+        feature = #{feature, typeHandler=com.xunbai.ai.util.JsonTypeHandler},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+    and version = #{version}
+  </update>
+
+  <select id="queryById" resultMap="BaseResultMap">
+    select
+      <include refid="Base_Column_List"/>
+    from user_info
+    where id = #{id}
+  </select>
+
+  <select id="queryByOpenId" resultType="com.zhibai.ai.model.domain.UserInfoDO">
+    select
+    <include refid="Base_Column_List"/>
+    from user_info
+    where open_id = #{openId}
+  </select>
+
+  <update id="updateBalance" >
+    update user_info
+    set withdrawal_balance = #{withdrawalBalance}
+    where id = #{id}
+  </update>
+
+</mapper>

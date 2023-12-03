@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhibai.ai.mapper.SceneInfoMapper">
+  <resultMap id="BaseResultMap" type="com.zhibai.ai.model.domain.SceneInfoDO">
+    <!--@mbg.generated-->
+    <!--@Table scene_info-->
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
+    <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified" />
+    <result column="version" jdbcType="INTEGER" property="version" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="scene_type" jdbcType="TINYINT" property="sceneType" />
+    <result column="scene_icon" jdbcType="LONGVARCHAR" property="sceneIcon" />
+    <result column="scene_title" jdbcType="VARCHAR" property="sceneTitle" />
+    <result column="scene_desc" jdbcType="VARCHAR" property="sceneDesc" />
+    <result column="scene_prompt" jdbcType="VARCHAR" property="scenePrompt" />
+    <result column="fill_info" jdbcType="VARCHAR" property="fillInfo" typeHandler="com.zhibai.ai.util.JsonTypeHandler"/>
+    <result column="feature" jdbcType="VARCHAR" property="feature" typeHandler="com.zhibai.ai.util.JsonTypeHandler"/>
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, gmt_create, gmt_modified, version, status, scene_type, scene_icon, scene_title, scene_desc,
+    scene_prompt, fill_info, feature
+  </sql>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.zhibai.ai.model.domain.SceneInfoDO" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into scene_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="sceneType != null">
+        scene_type,
+      </if>
+      <if test="sceneIcon != null">
+        scene_icon,
+      </if>
+      <if test="sceneTitle != null">
+        scene_title,
+      </if>
+      <if test="sceneDesc != null">
+        scene_desc,
+      </if>
+      <if test="scenePrompt != null">
+        scene_prompt,
+      </if>
+      <if test="fillInfo != null">
+        fill_info,
+      </if>
+      <if test="feature != null">
+        feature,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="sceneType != null">
+        #{sceneType,jdbcType=TINYINT},
+      </if>
+      <if test="sceneIcon != null">
+        #{sceneIcon,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="sceneTitle != null">
+        #{sceneTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="sceneDesc != null">
+        #{sceneDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="scenePrompt != null">
+        #{scenePrompt,jdbcType=VARCHAR},
+      </if>
+      <if test="fillInfo != null">
+        #{fillInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="feature != null">
+        #{feature, typeHandler=com.xunbai.ai.util.JsonTypeHandler},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zhibai.ai.model.domain.SceneInfoDO">
+    <!--@mbg.generated-->
+    update scene_info
+    <set>
+      <if test="version != null">
+        version = version + 1,
+      </if>
+      <if test="sceneType != null">
+        scene_type = #{sceneType,jdbcType=TINYINT},
+      </if>
+      <if test="sceneIcon != null">
+        scene_icon = #{sceneIcon,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="sceneTitle != null">
+        scene_title = #{sceneTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="sceneDesc != null">
+        scene_desc = #{sceneDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="scenePrompt != null">
+        scene_prompt = #{scenePrompt,jdbcType=VARCHAR},
+      </if>
+      <if test="fillInfo != null">
+        fill_info = #{fillInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="feature != null">
+        feature = #{feature, typeHandler=com.xunbai.ai.util.JsonTypeHandler},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+    and version = #{version}
+  </update>
+
+  <select id="queryById" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from scene_info
+    where id = #{id}
+  </select>
+
+  <select id="queryAll" resultMap="BaseResultMap">
+    select
+        <include refid="Base_Column_List"/>
+    from scene_info
+    where status = 1 order by scene_type asc
+  </select>
+</mapper>

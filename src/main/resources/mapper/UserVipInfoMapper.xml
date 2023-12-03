@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhibai.ai.mapper.UserVipInfoMapper">
+  <resultMap id="BaseResultMap" type="com.zhibai.ai.model.domain.UserVipInfoDO">
+    <!--@mbg.generated-->
+    <!--@Table user_vip_info-->
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
+    <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified" />
+    <result column="version" jdbcType="INTEGER" property="version" />
+    <result column="user_id" jdbcType="BIGINT" property="userId" />
+    <result column="type" jdbcType="TINYINT" property="type" />
+    <result column="package_type" jdbcType="TINYINT" property="packageType" />
+    <result column="total_number" jdbcType="INTEGER" property="totalNumber" />
+    <result column="text_remain_number" jdbcType="INTEGER" property="textRemainNumber" />
+    <result column="speed_remain_number" jdbcType="INTEGER" property="speedRemainNumber" />
+    <result column="relax_remain_number" jdbcType="INTEGER" property="relaxRemainNumber" />
+    <result column="expired_time" jdbcType="TIMESTAMP" property="expiredTime" />
+    <result column="feature" jdbcType="VARCHAR" property="feature" typeHandler="com.zhibai.ai.util.JsonTypeHandler"/>
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, gmt_create, gmt_modified, version, user_id, `type`, package_type, total_number, 
+    text_remain_number, speed_remain_number, relax_remain_number, expired_time, feature
+  </sql>
+
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.zhibai.ai.model.domain.UserVipInfoDO" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into user_vip_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="type != null">
+        `type`,
+      </if>
+      <if test="packageType != null">
+        package_type,
+      </if>
+      <if test="totalNumber != null">
+        total_number,
+      </if>
+      <if test="textRemainNumber != null">
+        text_remain_number,
+      </if>
+      <if test="speedRemainNumber != null">
+        speed_remain_number,
+      </if>
+      <if test="relaxRemainNumber != null">
+        relax_remain_number,
+      </if>
+      <if test="expiredTime != null">
+        expired_time,
+      </if>
+      <if test="feature != null">
+        feature,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=TINYINT},
+      </if>
+      <if test="packageType != null">
+        #{packageType,jdbcType=TINYINT},
+      </if>
+      <if test="totalNumber != null">
+        #{totalNumber,jdbcType=INTEGER},
+      </if>
+      <if test="textRemainNumber != null">
+        #{textRemainNumber,jdbcType=INTEGER},
+      </if>
+      <if test="speedRemainNumber != null">
+        #{speedRemainNumber,jdbcType=INTEGER},
+      </if>
+      <if test="relaxRemainNumber != null">
+        #{relaxRemainNumber,jdbcType=INTEGER},
+      </if>
+      <if test="expiredTime != null">
+        #{expiredTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="feature != null">
+        #{feature, typeHandler=com.xunbai.ai.util.JsonTypeHandler},
+      </if>
+    </trim>
+  </insert>
+
+  <update id="updateByPrimaryKeySelective" parameterType="com.zhibai.ai.model.domain.UserVipInfoDO">
+    <!--@mbg.generated-->
+    update user_vip_info
+    <set>
+      <if test="version != null">
+        version = version + 1,
+      </if>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="type != null">
+        `type` = #{type,jdbcType=TINYINT},
+      </if>
+      <if test="packageType != null">
+        package_type = #{packageType,jdbcType=TINYINT},
+      </if>
+      <if test="totalNumber != null">
+        total_number = #{totalNumber,jdbcType=INTEGER},
+      </if>
+      <if test="textRemainNumber != null">
+        text_remain_number = #{textRemainNumber,jdbcType=INTEGER},
+      </if>
+      <if test="speedRemainNumber != null">
+        speed_remain_number = #{speedRemainNumber,jdbcType=INTEGER},
+      </if>
+      <if test="relaxRemainNumber != null">
+        relax_remain_number = #{relaxRemainNumber,jdbcType=INTEGER},
+      </if>
+      <if test="expiredTime != null">
+        expired_time = #{expiredTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="feature != null">
+        feature = #{feature, typeHandler=com.xunbai.ai.util.JsonTypeHandler},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+    and version = #{version}
+  </update>
+
+  <select id="queryByUserIdAndType" resultMap="BaseResultMap">
+    select
+      <include refid="Base_Column_List"/>
+    from
+      user_vip_info
+    where user_id = #{userId}
+    and type = #{type}
+  </select>
+
+  <select id="queryByUserId" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from
+    user_vip_info
+    where user_id = #{userId}
+  </select>
+</mapper>

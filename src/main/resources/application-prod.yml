@@ -1,0 +1,80 @@
+server:
+    port: 8090
+    tomcat:
+      uri-encoding: UTF-8
+      min-spare-threads: 5
+      connection-timeout: -1
+
+logging:
+  level:
+    ROOT: info
+    com.xunbai.ai.mapper: debug
+
+
+spring:
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 20MB
+  datasource:
+    url: jdbc:mysql://106.52.221.200:3306/aiserverdb
+    username: aiserver
+    password: AiServer@2023
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      idle-timeout: 0
+      maximum-pool-size: 10
+      minimum-idle: 0
+      connection-test-query: SELECT 1
+  redis:
+    host: 106.52.221.200
+    port: 6379
+    password: ai@2023
+
+mybatis-plus:
+  mapper-locations: classpath*:mapper/**/*.xml
+
+security:
+  jwtSecret: MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDBbOROeXF6rBGB0OVeAn+SslKj/4IY3sTr14+2SVy+tryhokWu7tB1sYcVO8fzOo/9sWSMWzyukTf2p7o1y1//BGVzox2t0KUtnLjIxTdmmDcZtwLkS9cGgbEeiKUXD0OdQ9q9jmiMU7iQMsGZfRfj8kOp9In+8XpzW4jkwdU2/2OAG2SrRw63hdmyKcJY2Z0/UWdnOpa2PV6iVGsJju0qb5OnNZazNKgbL4zm/3DF/RJpKC7cXiKv0xsYDO+LlVLfBnTl1FA+XQz4wKQ/xCQ0BvPgWnAQJvWpLIIfaA8PBwgFs/DlYtMiDvlja7+6v+SwLAfa8ZOlfiaKjd7nAHVvAgMBAAECggEAT1ni16bOvSq2C/GtB0IzH/V0Hb+GmblaQ/6tAHVcTQkenZi6yadDceUgq79YqhoOVF9gBoyvelYtBU2OAN+sRCyDiksSs+nyuaGf1Q3DSp2LjUsdLpdGYW73QLWCNNGYRX4+0KEJlvgJsW6BKfy9vk/3HlQqAKMEPysAIAi89dBdQdriGaYW2Ve5FrukyuTIUiG7MAaT98F52Y3Zou9qxB3Oei7TWjWvXKa5uWRNCcTyYP3ATQjxMaeI3RBo6ttQC+NoCm/vyn/Atxh1qOKuv2yol4tbIkCr1d0eJz7INMo9qi5IUeWfU4skxdFT9PtxvRDf92s01MeGqrmdyytnUQKBgQDnlNGvw5+mHhZR/txOmu3KFo459R2PcvkxD1xz/v/iFvW+Adg5srJY3sN456u4+cj/qsnq9cyARsaHWRojOfiaT6Mg8YLeg5p32uggOYO8UA4iWKec+FmKhZDAO0owuGLrN/49AMDzkX16U3ATh6+k1wpAeUi0XzrmYtzx9/OGbQKBgQDV0hx6pWtXUDo+HMu7s59uKd3Of3Ir3GY7N+f1DaI96ELU50Lqnh8Any4lP+JA4+S8tM6lms1yjHZ9zV8FkfUhdWYlpHNR+ucJ+kfWCAnUvcuvf2VoJi6YkkxnTF7GBi23LyLawkdUWLqNAxb7pTvyc3j81Vsif2iP1IHJypIxywKBgGli0AmsfHqcNowZ7yfWWWAd45t8cHdXWw94bhpbcRbyW+Kb9EpNh9vphAsBYqRLB61Ri5HhSa8WhkIRylM9jmSq2RGk1mlsel8Qv5HqmoiX5da7gYtteVIQdk8ErD5/qoRgdtJMBYLSMsf4MIiytrvNIF021F9A9wzg8KssqyYBAoGBAKYkI8LcxAJNMWRP5bJMiOYFm/a3KpSQJdN/xjmwRU+LKFrb8y/wezB1f1qsP/ah3XsPlr4xAdAu+mcX6+ydE/bSjPNUy9J4fYtQMP9KsbDfZORRvg7mFDCzBLEDM2T1KhJ7ir6mVNxiMVoee34/Tsw+E1WJxs2QaEPSIKMWRvBvAoGAGYHj7woCT04FfLUkbfLcOfbtCF+FrrtlQdKnAH8bKrg7EcpUQK1iNacBILfqwyhG5rE9iG2K7hEuRvNp9Wq6LDWYJYy5WwDTbyfG/tBgm86CH0zlEVr6Z4GbOvFvSi44STVwcsI2qSZA4cS4ZBhKLatjRS8JQMxxiPu73t4m/f4=
+  jwtExpirationInSecond: 864000
+
+ai:
+  openai:
+    gptApiKey: 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
+    gptProxyUrl: https://service-pgn14xp7-1316905570.ca.apigw.tencentcs.com
+  mjProxyUrl: http://mj.itbook123.com/mj
+  notifyHook: http://106.52.221.200:8090/picture/notify
+
+openai:
+  domain: "https://service-pgn14xp7-1316905570.ca.apigw.tencentcs.com"
+  keys:
+    - key: "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"
+      weight: 1.0
+      enabled: true
+
+cos:
+  secretId: AKIDCHBvU2VlsqbkfOtAyiKx572wjOuGTehb
+  secretKey: qW1Mdh4GJ9mX7MRIvNdiZBey50jIht11
+  bucket: aicat-cos-1316905570
+  region: ap-shanghai
+  url: https://aicat-cos-1316905570.cos.ap-shanghai.myqcloud.com/
+
+weixin:
+  appId: wx2de7703873c9fbe8
+  appSecret: bd25762221da96f4d47cfe39768103ee
+  token: 1662470670585565184
+
+wxpay:
+  appId: wx2de7703873c9fbe8
+  merchantId: 1644737987
+  merchantSerialNumber: 5F80FE6A67161935443C27D341EB0707EE733E46
+  privateKeyPath: /home/lighthouse/ai-server/wxcert/1644737987_20230527_cert/apiclient_key.pem
+  apiV3key: YXsol19990929YXsol19999YXsol9929
+
+
+#zookeeper:
+#  connectString: 106.52.221.200:2181
+#  sessionTimeoutMs: 60000
+#  connectionTimeoutMs: 15000
+#  baseSleepTimeMs: 1000
+#  maxRetries: 10

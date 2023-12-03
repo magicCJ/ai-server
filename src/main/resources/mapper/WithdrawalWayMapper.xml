@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhibai.ai.mapper.WithdrawalWayMapper">
+
+    <resultMap id="BaseResultMap" type="com.zhibai.ai.model.domain.WithdrawalWayDO">
+        <id property="id" column="id" jdbcType="BIGINT"/>
+        <result property="gmtCreate" column="gmt_create" jdbcType="TIMESTAMP"/>
+        <result property="gmtModified" column="gmt_modified" jdbcType="TIMESTAMP"/>
+        <result property="version" column="version" jdbcType="INTEGER"/>
+        <result property="userId" column="user_id" jdbcType="BIGINT"/>
+        <result property="withdrawalType" column="withdrawal_type" jdbcType="TINYINT"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="phone" column="phone" jdbcType="VARCHAR"/>
+        <result property="idCard" column="id_card" jdbcType="VARCHAR"/>
+        <result property="bankNumber" column="bank_number" jdbcType="VARCHAR"/>
+        <result property="bankName" column="bank_name" jdbcType="VARCHAR"/>
+        <result property="alipayAccount" column="alipay_account" jdbcType="VARCHAR"/>
+        <result property="wechatAccount" column="wechat_account" jdbcType="VARCHAR"/>
+        <result property="feature" column="feature" jdbcType="VARCHAR" typeHandler="com.zhibai.ai.util.JsonTypeHandler"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,gmt_create,gmt_modified,
+        version,user_id,withdrawal_type,
+        `name`,phone,id_card,
+        bank_number,bank_name,alipay_account,
+        wechat_account,feature
+    </sql>
+
+    <select id="queryByUserId" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from withdrawal_way
+        where user_id = #{userId}
+    </select>
+
+    <delete id="deleteByPrimaryKey">
+        delete from withdrawal_way
+        where  id = #{id,jdbcType=BIGINT}
+        and user_id = #{userId}
+    </delete>
+
+    <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.zhibai.ai.model.domain.WithdrawalWayDO" useGeneratedKeys="true">
+        insert into withdrawal_way
+        ( user_id,withdrawal_type,`name`,phone,id_card,bank_number,bank_name,alipay_account,wechat_account)
+        values (#{userId,jdbcType=BIGINT},#{withdrawalType,jdbcType=TINYINT},#{name,jdbcType=VARCHAR},#{phone,jdbcType=VARCHAR},
+        #{idCard,jdbcType=VARCHAR}, #{bankNumber,jdbcType=VARCHAR},#{bankName,jdbcType=VARCHAR},#{alipayAccount,jdbcType=VARCHAR},
+        #{wechatAccount,jdbcType=VARCHAR})
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.zhibai.ai.model.domain.WithdrawalWayDO">
+        update withdrawal_way
+        <set>
+            <if test="version != null">
+                version = version + 1,
+            </if>
+            <if test="withdrawalType != null">
+                withdrawal_type = #{withdrawalType,jdbcType=TINYINT},
+            </if>
+            <if test="name != null">
+                `name` = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="phone != null">
+                phone = #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="idCard != null">
+                id_card = #{idCard,jdbcType=VARCHAR},
+            </if>
+            <if test="bankNumber != null">
+                bank_number = #{bankNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="bankName != null">
+                bank_name = #{bankName,jdbcType=VARCHAR},
+            </if>
+            <if test="alipayAccount != null">
+                alipay_account = #{alipayAccount,jdbcType=VARCHAR},
+            </if>
+            <if test="wechatAccount != null">
+                wechat_account = #{wechatAccount,jdbcType=VARCHAR},
+            </if>
+            <if test="feature != null">
+                feature = #{feature, typeHandler=com.xunbai.ai.util.JsonTypeHandler},
+            </if>
+        </set>
+        where   id = #{id,jdbcType=BIGINT}
+        and user_id = #{userId}
+    </update>
+</mapper>
